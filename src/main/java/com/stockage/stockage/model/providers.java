@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "providers")
 @EntityListeners(AuditingEntityListener.class)
-public class Providers implements Serializable {
+public class providers implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,5 +76,10 @@ public class Providers implements Serializable {
 
     public void setProvider_address(String provider_address) {
         this.provider_address = provider_address;
+    }
+
+    public void getCustomInfo() {
+        System.out.println(String.format("provider_id: %d\nprovider_name: %s\nprovider_rewrite: %s\nprovider_email: %s\nprovider_phone: %s\nprovider_address: %s",
+                provider_id, provider_name, provider_rewrite, provider_email, provider_phone, provider_address));
     }
 }
