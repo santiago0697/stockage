@@ -61,7 +61,7 @@ public class ProvidersController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProvider(@PathVariable(value = "id") Integer provider_id) {
         providers p = providersRepository.findById(provider_id)
-                .orElseThrow(() -> new ResourceNotFoundException("Provider", "rewrite", provider_id));
+                .orElseThrow(() -> new ResourceNotFoundException("Provider", "provider_id", provider_id));
 
         providersRepository.delete(p);
 
