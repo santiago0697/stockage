@@ -35,13 +35,6 @@ public class LocationsController {
                 .orElseThrow(() -> new ResourceNotFoundException("Location", "id", location_id));
     }
 
-    // Get single provider by rewrite
-    @GetMapping("getByRewrite/{rewrite}")
-    public locations getLocationByRewrite(@PathVariable(value = "rewrite") String rewrite) {
-        return locationsRepository.getByRewrite(rewrite)
-                .orElseThrow(() -> new ResourceNotFoundException("Provider", "rewrite", rewrite));
-    }
-
     // Update provider
     @PutMapping("/update/{id}")
     public locations updateLocation(@PathVariable(value = "id") Integer location_id, @Valid @RequestBody locations newLocation) {
