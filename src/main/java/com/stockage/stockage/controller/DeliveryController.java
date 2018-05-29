@@ -3,9 +3,11 @@ package com.stockage.stockage.controller;
 import com.stockage.stockage.exception.ResourceNotFoundException;
 import com.stockage.stockage.model.delivery;
 import com.stockage.stockage.model.delivery_status;
+import com.stockage.stockage.model.distributors;
 import com.stockage.stockage.model.products;
 import com.stockage.stockage.repository.DeliveryRepository;
 import com.stockage.stockage.repository.DeliveryStatusRepository;
+import com.stockage.stockage.repository.DistributorsRepository;
 import com.stockage.stockage.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,24 +26,31 @@ public class DeliveryController {
     DeliveryStatusRepository deliveryStatusRepository;
     @Autowired
     ProductsRepository productsRepository;
+    @Autowired
+    DistributorsRepository distributorsRepository;
+
 
     @GetMapping("/all")
     public List<delivery> getAll() {
         return deliveryRepository.findAll();
     }
 
-    @PostMapping("/create/products_id/{products_id}/deliveryStatus/{delivery_status_id}")
+    @PostMapping("/create/products_id/{products_id}/deliveryStatus/{delivery_status_id}/distributors_id/{distributors_id}")
     public delivery createDelivery(@PathVariable(value = "products_id") Integer products_id,
                                    @PathVariable(value = "delivery_status_id") Integer delivery_status_id,
+                                   @PathVariable(value = "distributors_id") Integer distributors_id,
                                    @Valid @RequestBody delivery delivery) {
 
         products p = productsRepository.findById(products_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "products_id", products_id));
         delivery_status ds = deliveryStatusRepository.findById(delivery_status_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Delivewry Status", "deliveryk_status_id", delivery_status_id));
+        distributors d = distributorsRepository.findById(distributors_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Distribuidor", "distributors_id", distributors_id));
 
         delivery.setProducts_id(p);
         delivery.setDelivery_status_id(ds);
+        delivery.setDistributors(d);
 
         return deliveryRepository.save(delivery);
     }
