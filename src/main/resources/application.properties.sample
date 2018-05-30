@@ -1,7 +1,9 @@
+## Fichero de ejemplo para la configuracion basica de Springboot / JPA (Hibernate)
+
 ## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
 spring.datasource.url=jdbc:mysql://localhost:3306/stockage_db?useSSL=false
 spring.datasource.username=root
-spring.datasource.password=stockage
+spring.datasource.password=
 
 ## Hibernate Properties
 # The SQL dialect makes Hibernate generate better SQL for the chosen database

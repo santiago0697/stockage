@@ -28,3 +28,5 @@
 log/
 target/
 
+### SpringBoot ###
+src/main/resources/application.properties
