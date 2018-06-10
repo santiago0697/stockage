@@ -114,4 +114,12 @@ public class products implements Serializable {
     public void setLocation(locations location) {
         this.location = location;
     }
+
+    public void decreaseStock() {
+        products_qty--;
+    }
+
+    public void decreaseStock(Integer qty) {
+        products_qty -= qty;
+    }
 }

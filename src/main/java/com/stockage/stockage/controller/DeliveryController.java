@@ -1,5 +1,6 @@
 package com.stockage.stockage.controller;
 
+import com.stockage.stockage.exception.ApiError;
 import com.stockage.stockage.exception.ResourceNotFoundException;
 import com.stockage.stockage.model.delivery;
 import com.stockage.stockage.model.delivery_status;
@@ -10,6 +11,9 @@ import com.stockage.stockage.repository.DeliveryStatusRepository;
 import com.stockage.stockage.repository.DistributorsRepository;
 import com.stockage.stockage.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,10 +40,10 @@ public class DeliveryController {
     }
 
     @PostMapping("/create/products_id/{products_id}/deliveryStatus/{delivery_status_id}/distributors_id/{distributors_id}")
-    public delivery createDelivery(@PathVariable(value = "products_id") Integer products_id,
-                                   @PathVariable(value = "delivery_status_id") Integer delivery_status_id,
-                                   @PathVariable(value = "distributors_id") Integer distributors_id,
-                                   @Valid @RequestBody delivery delivery) {
+    public Object createDelivery(@PathVariable(value = "products_id") Integer products_id,
+                                 @PathVariable(value = "delivery_status_id") Integer delivery_status_id,
+                                 @PathVariable(value = "distributors_id") Integer distributors_id,
+                                 @Valid @RequestBody delivery delivery) {
 
         products p = productsRepository.findById(products_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "products_id", products_id));
@@ -48,10 +52,17 @@ public class DeliveryController {
         distributors d = distributorsRepository.findById(distributors_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Distribuidor", "distributors_id", distributors_id));
 
+        p.decreaseStock();
+
         delivery.setProducts_id(p);
         delivery.setDelivery_status_id(ds);
         delivery.setDistributors(d);
 
+        if (p.getProducts_qty() < 0) {
+            ApiError error = new ApiError(HttpStatus.CONFLICT, "No hay stock suficiente", "stock");
+            return new ResponseEntity<Object>(error, new HttpHeaders(), error.getHttpStatus());
+        }
+        productsRepository.save(p);
         return deliveryRepository.save(delivery);
     }
 
