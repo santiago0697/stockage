@@ -38,7 +38,7 @@ public class LabelsTemplatesController {
         return labelsTemplateRepository.save(labels_templates);
     }
 
-    @GetMapping("/getLabel/{labels_id}")
+    @GetMapping("/get/{labels_id}")
     public labels_templates getLabel(@PathVariable(value = "labels_id") Integer labels_id) {
         return labelsTemplateRepository.findById(labels_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Label", "labels_id", labels_id));

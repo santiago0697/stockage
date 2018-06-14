@@ -55,7 +55,7 @@ public class ProductsController {
     }
 
     // Get single provider by ID
-    @GetMapping("/getById/{id}")
+    @GetMapping("/get/{id}")
     public products getProductById(@PathVariable(value = "id") Integer product_id) {
         return productsRepository.findById(product_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", product_id));

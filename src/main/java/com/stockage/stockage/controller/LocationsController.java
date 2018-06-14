@@ -29,7 +29,7 @@ public class LocationsController {
     }
 
     // Get single provider by ID
-    @GetMapping("/getById/{id}")
+    @GetMapping("/get/{id}")
     public locations getLocationById(@PathVariable(value = "id") Integer location_id) {
         return locationsRepository.findById(location_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Location", "id", location_id));

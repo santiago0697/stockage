@@ -30,7 +30,7 @@ public class ProvidersController {
     }
 
     // Get single provider by ID
-    @GetMapping("/getById/{id}")
+    @GetMapping("/get/{id}")
     public providers getProviderById(@PathVariable(value = "id") Integer provider_id) {
         return providersRepository.findById(provider_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Provider", "id", provider_id));

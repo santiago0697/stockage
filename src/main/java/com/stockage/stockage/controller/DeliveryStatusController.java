@@ -27,7 +27,7 @@ public class DeliveryStatusController {
         return deliveryStatusRepository.save(deliveryStatus);
     }
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("/get/{id}")
     public delivery_status getDeliveryStatusById(@PathVariable(value = "id") Integer delivery_status_id) {
         return deliveryStatusRepository.findById(delivery_status_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Delivery Status", "delivery_status_id", delivery_status_id));

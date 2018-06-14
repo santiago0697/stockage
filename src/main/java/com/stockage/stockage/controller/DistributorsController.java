@@ -27,7 +27,7 @@ public class DistributorsController {
         return distributorsRepository.save(newDistributor);
     }
 
-    @GetMapping("/getDistributor/{distributors_id}")
+    @GetMapping("/get/{distributors_id}")
     public distributors getDistributor(@PathVariable(value = "distributors_id") Integer distributors_id) {
         return distributorsRepository.findById(distributors_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Distribuidor", "distributors_id", distributors_id));
